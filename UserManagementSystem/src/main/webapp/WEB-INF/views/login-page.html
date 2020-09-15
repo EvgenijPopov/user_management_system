@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Form</title>
+    <link type="text/css" rel="stylesheet"
+          th:href="@{/resources/static/style.css}"/>
+</head>
+<body>
+<form action="#" th:action="@{/authenticateTheUser}" method="post">
+    <div class="form">
+        <h2>Login</h2>
+        <div style="margin-top: 15px" class="roundBox">
+            <div th:if="${param.error}">
+                Invalid username/password or your account is inactive!
+            </div>
+            <div th:if="${param.logout}">
+                You've been logged out.
+            </div>
+        </div>
+        <div class="input">
+            <div class="inputBox">
+                <label>Username</label>
+                <input type="text" name="username" placeholder="username">
+            </div>
+            <div class="inputBox">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="password">
+            </div>
+            <div class="inputBox">
+                <input type="submit" name="login" value="Sign In">
+            </div>
+        </div>
+    </div>
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+</form>
+</body>
+</html>

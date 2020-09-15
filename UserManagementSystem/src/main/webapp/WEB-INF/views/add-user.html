@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add or Update user</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <h2>Create New User Account</h2>
+    <!-- sent data from user form to object mapped as userAccount in Controller -->
+    <form action="#" th:action="@{/ums/save}"
+          th:object="${userAccount}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <div class="form-group col-6">
+            <label for="user">User name:</label>
+            <input type="text" th:field="*{userName}" placeholder="User name" class="form-control" id="user">
+            <!-- if we have validation errors display them right on each field -->
+            <div th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"
+                 class="alert alert-danger col-xs-offset-1 col-xs-10"></div>
+            <div th:errors="${userAccount}"
+                 class="alert alert-danger col-xs-offset-1 col-xs-10"></div> <!-- message for @UniqueAccount validation -->
+        </div>
+
+        <div class="form-group col-6">
+            <label for="password">Password:</label>
+            <input type="password" th:field="*{password}" placeholder="Password" class="form-control" id="password">
+            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                 class="alert alert-danger col-xs-offset-1 col-xs-10"></div>
+        </div>
+
+        <div class="form-group col-6">
+            <label for="fName">First Name:</label>
+            <input type="text" th:field="*{firstName}" placeholder="First Name" class="form-control" id="fName">
+            <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
+                 class="alert alert-danger col-xs-offset-1 col-xs-10"></div>
+        </div>
+
+        <div class="form-group col-6">
+            <label for="lName">Last Name:</label>
+            <input type="text" th:field="*{lastName}" placeholder="Last Name" class="form-control" id="lName">
+            <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                 class="alert alert-danger col-xs-offset-1 col-xs-10"></div>
+        </div>
+
+        <input type="hidden" th:field="*{createdAt}">
+
+        <div class="form-group col-4">
+            <label for="role">Choose a role:</label>
+            <select id="role" name="roles" th:field="*{role}" class="form-control">
+                <option value="ROLE_USER">USER</option>
+                <option value="ROLE_ADMIN">ADMIN</option>
+            </select>
+        </div>
+
+        <div class="form-group col-4">
+            <label for="status">Choose a user status:</label>
+            <select id="status" name="statuses" th:field="*{status}" class="form-control">
+                <option value="true">ACTIVE</option>
+                <option value="false">INACTIVE</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-success col-2 ml-3">Create</button>
+    </form>
+    <br>
+    <a th:href="@{/ums/users/1}" class="btn btn-warning col-2 ml-3">Cancel</a>
+</div>
+</body>
+</html>

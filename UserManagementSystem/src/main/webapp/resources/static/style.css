@@ -1,0 +1,86 @@
+* /* for all elements */
+{
+    margin: 0; /* set up margins and padding manually to 0 to eliminate their superposition */
+    padding: 0;
+    box-sizing: border-box; /* include padding and border in the element's total width and height without margins */
+    font-family: 'Arial', sans-serif;
+}
+
+body
+{
+    display: flex; /* body becomes flexible */
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* minimum height - 100% viewpoint height */
+    background: #f6f8f8;
+}
+.form
+{
+    position: relative; /* form position will be relative to it start position (content centered) */
+    width: 350px;
+    padding: 40px 60px;
+    background: #f6f8f8;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: -5px -5px 10px rgba(255,255,255,0.05),
+    5px 5px 15px rgba(0, 0, 0, 0.7);
+}
+.form h2
+{
+    color: indigo;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+.form .roundBox {
+    border-radius: 8px;
+    background-color: indigo;
+    color: #f6f8f8;
+}
+.form .input
+{
+    margin-top: 40px;
+}
+.form .input .inputBox
+{
+    margin-top: 20px;
+}
+.form .input .inputBox label
+{
+    display: block; /* inline element become block */
+    color: indigo;
+    margin-bottom: 5px;
+    font-size: 18px;
+}
+.form .input .inputBox input
+{
+    width: 100%;
+    height: 50px;
+    background: #f6f8f8;
+    border: none;
+    outline: none;
+    border-radius: 30px;
+    padding: 5px 15px;
+    color: #037d7d;
+    font-size: 18px;
+    box-shadow: inset -2px -2px 6px rgba(255,255,255,0.1),
+    inset 2px 2px 6px rgba(0,0,0,0.7);
+}
+.form .input .inputBox input[type="submit"]
+{
+    margin-top: 20px;
+    box-shadow: -2px -2px 6px rgba(255,255,255,0.1),
+    2px 2px 6px rgba(0,0,0,0.7);
+}
+.form .input .inputBox input[type="submit"]:active
+{
+    background: #2e66ef;
+    margin-top: 20px;
+    box-shadow: inset -2px -2px 6px rgba(255,255,255,0.1),
+    inset 2px 2px 6px rgba(0,0,0,0.7);
+}
+.form .input .inputBox input::placeholder
+{
+    color: #5c5b5b;
+    font-size: 18px;
+}

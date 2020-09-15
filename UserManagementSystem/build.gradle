@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group 'test.popov'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Adding main Spring MVC dependencies
+    compile group: 'org.springframework', name: 'spring-core', version: '5.2.7.RELEASE'
+    compile group: 'org.springframework', name: 'spring-web', version: '5.2.7.RELEASE'
+    compile group: 'org.springframework', name: 'spring-webmvc', version: '5.2.7.RELEASE'
+    compile group: 'org.springframework', name: 'spring-context', version: '5.2.7.RELEASE'
+    compile group: 'org.springframework', name: 'spring-tx', version: '5.2.7.RELEASE'
+    compile group: 'org.springframework', name: 'spring-orm', version: '5.2.7.RELEASE'
+    // Adding Hibernate & Bean Validation dependencies
+    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.18.Final'
+    compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.1.5.Final'
+    compile group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+    // Adding dependency for connection pooling
+    compile group: 'com.mchange', name: 'c3p0', version: '0.9.5.5'
+    // Adding PostgreSQL DB main dependency
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.14'
+    // Adding dependency for servlets
+    providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+    // Adding Thymeleaf dependencies (Spring MVC & Spring Security)
+    compile group: 'org.thymeleaf', name: 'thymeleaf-spring5', version: '3.0.11.RELEASE'
+    compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity5', version: '3.0.4.RELEASE'
+    // Adding Spring Security dependencies
+    compile group: 'org.springframework.security', name: 'spring-security-web', version: '5.3.1.RELEASE'
+    compile group: 'org.springframework.security', name: 'spring-security-config', version: '5.3.1.RELEASE'
+    // Test
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+}

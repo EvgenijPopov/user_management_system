@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of users</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container" style="font-size: medium">
+    <div class="row bg-success" style="text-align: center; color: azure">
+        <div class="col-sm-4">Authorising Successful</div>
+        <div class="col-sm-8"><span sec:authentication="name"></span> has logged in as <span
+                sec:authentication="principal.authorities"></span></div>
+        <!-- this block show who authenticated and its role -->
+    </div>
+    <br>
+    <div class="row">
+        <div sec:authorize="hasRole('ADMIN')" class="col-md-4">
+            <a th:href="@{/ums/new}" class="btn btn-success mb-4">Add new user</a>
+            <!-- this block create add button (only ADMIN can see it) -->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <!-- this block add 2 buttons for simple sorting by userName or by role -->
+            <button onclick="sortTable(0)" class="btn btn-info mb-3">Sort by User Name</button>
+            <button onclick="sortTable(1)" class="btn btn-info mb-3">Sort by Authority</button>
+        </div>
+    </div>
+    <table id="userTable" class="table table-bordered table-striped table-hover"
+           style="text-align: center; background-color: white">
+        <thead class="bg-primary" style="color: azure">
+        <tr>
+            <th>User Name</th>
+            <th>Authority</th>
+            <th>Details</th>
+            <th sec:authorize="hasRole('ADMIN')">Operation</th> <!-- only ADMIN can see Operation header and its buttons -->
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user:${listOfUsers}">
+            <td th:text="${user.userName}"></td>
+            <td th:text="${user.role}"></td>
+            <!--we use id parameter for all @RequestParam methods -->
+            <td><a th:href="@{/ums/showDetails(userId=${user.id})}"
+                   class="btn btn-outline-info">View details</a></td>
+            <td sec:authorize="hasRole('ADMIN')">
+                <a th:href="@{/ums/edit(userId=${user.id})}"
+                   class="btn btn-outline-warning mr-3">Edit</a>
+                <a th:href="@{/ums/delete(userId=${user.id})}"
+                   class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div> <!-- Simple pagination for 3 pages -->
+        <ul class="pagination pagination-lg justify-content-center" style="margin:20px 0">
+            <li class="page-item"><a class="page-link" th:href="@{/ums/users/1}">1</a></li>
+            <li class="page-item"><a class="page-link" th:href="@{/ums/users/2}">2</a></li>
+            <li class="page-item"><a class="page-link" th:href="@{/ums/users/3}">3</a></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <form th:action="@{/logout}" method="post" class="form-group">
+                <input type="submit" value="Logout" class="btn btn-warning mb-4"/>
+            </form>
+        </div>
+        <!-- this block provides logout button support by Spring Security -->
+    </div>
+</div>
+<!-- JS function sort data in column n -->
+<script>
+    function sortTable(n) {
+        var table, row, switching, currentRow, nextRow, isSwitched, i;
+        table = document.getElementById("userTable");
+        switching = true;
+        while (switching) {
+            switching = false;
+            row = table.rows;
+            for (i = 1; i < (row.length - 1); i++) {
+                isSwitched = false;
+                currentRow = row[i].getElementsByTagName("td")[n];
+                nextRow = row[i + 1].getElementsByTagName("td")[n];
+                if (currentRow.innerHTML.toLowerCase() > nextRow.innerHTML.toLowerCase()) {
+                    isSwitched = true;
+                    break;
+                }
+            }
+            if (isSwitched) {
+                row[i].parentNode.insertBefore(row[i + 1], row[i]);
+                switching = true;
+            }
+        }
+    }
+</script>
+</body>
+</html>

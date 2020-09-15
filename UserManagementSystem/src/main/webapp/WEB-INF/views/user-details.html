@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"/>
+    <style>
+        th {
+            color: azure;
+        }
+    </style>
+</head>
+<body>
+<div class="container" style="margin-top: 50px">
+    <div>
+        <table class="table table-bordered">
+            <tr>
+                <th class="bg-primary">User name</th>
+                <td th:text="${userDetails.userName}"></td>
+            </tr>
+            <tr>
+                <th class="bg-primary">First Name</th>
+                <td th:text="${userDetails.firstName}"></td>
+            </tr>
+            <tr>
+                <th class="bg-primary">Last Name</th>
+                <td th:text="${userDetails.lastName}"></td>
+            </tr>
+            <tr>
+                <th class="bg-primary">Status</th>
+                <td> <!-- interpret data from the database in an understandable form -->
+                    <span th:if="${userDetails.status == true}">ACTIVE ACCOUNT</span>
+                    <span th:unless="${userDetails.status == true}">INACTIVE ACCOUNT</span>
+                </td>
+            </tr>
+            <tr>
+                <th class="bg-primary">Date of account creation</th>
+                <td th:text="${userDetails.createdAt}"></td>
+            </tr>
+        </table>
+    </div>
+    <div class="row">
+        <a th:href="@{/ums/users/1}" class="btn btn-danger ml-3">Back to list of users</a>
+    </div>
+</div>
+</body>
+</html>
