@@ -9,3 +9,6 @@ Stack:
 - Template engine: Thymeleaf;
 - Bean validation with Transfer Class (unique userName, password regexp);
 - View: HTML pages with Bootstrap 4.
+
+DB passwords:
+Alice_Test - 1111 - (ADMIN); Bob_Test - 0000 - (USER) (non-validated)
