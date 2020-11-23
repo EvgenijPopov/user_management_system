@@ -23,6 +23,12 @@ public class UserAccountServiceImplementation implements UserAccountService {
     }
 
     @Override
+    @Transactional
+    public Long getTotalCountOfUsers() {
+        return userAccountDAO.getTotalCountOfUsers();
+    }
+
+    @Override
     @Transactional // annotation that takes over the transaction management mechanism for each method
     public List<UserAccount> userAccountList(int pageId, int totalResults) {
         return userAccountDAO.userAccountList(pageId, totalResults);

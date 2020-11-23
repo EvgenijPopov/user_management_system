@@ -36,7 +36,8 @@
             <th>User Name</th>
             <th>Authority</th>
             <th>Details</th>
-            <th sec:authorize="hasRole('ADMIN')">Operation</th> <!-- only ADMIN can see Operation header and its buttons -->
+            <th sec:authorize="hasRole('ADMIN')">Operation</th>
+            <!-- only ADMIN can see Operation header and its buttons -->
         </tr>
         </thead>
         <tbody>
@@ -57,9 +58,9 @@
     </table>
     <div> <!-- Simple pagination for 3 pages -->
         <ul class="pagination pagination-lg justify-content-center" style="margin:20px 0">
-            <li class="page-item"><a class="page-link" th:href="@{/ums/users/1}">1</a></li>
-            <li class="page-item"><a class="page-link" th:href="@{/ums/users/2}">2</a></li>
-            <li class="page-item"><a class="page-link" th:href="@{/ums/users/3}">3</a></li>
+            <li class="page-item" th:each="page : ${pageRepository}">
+                <a class="page-link" th:value="${page.currentPage}" th:text="${page.currentPage}"
+                   th:href="@{/ums/users/{currentPage}(currentPage=${page.currentPage})}"></a></li>
         </ul>
     </div>
     <div class="row">

@@ -74,4 +74,11 @@ public class UserAccountDaoImplementation implements UserAccountDAO {
         }
         return account;
     }
+
+    @Override
+    public Long getTotalCountOfUsers() {
+        Session currentSession = sessionFactory.getCurrentSession();
+        Long totalUsers = (Long) currentSession.createQuery("SELECT COUNT(*) FROM UserAccount").getSingleResult();
+        return totalUsers;
+    }
 }

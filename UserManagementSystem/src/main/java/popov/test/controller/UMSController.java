@@ -7,14 +7,18 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import popov.test.UserAccountTransferClass;
 import popov.test.entity.UserAccount;
+import popov.test.pagination.Page;
 import popov.test.service.UserAccountService;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller // define controller bean which handles all request from user (extends @Component)
 @RequestMapping("/ums") // high-level mapping - add to all class methods specified prefix
 public class UMSController {
+
+    public static final int MAXIMUM_USERS_ON_PAGE = 8;
 
     private final UserAccountService userAccountService;
 
@@ -23,18 +27,14 @@ public class UMSController {
         this.userAccountService = userAccountService;
     }
 
-    // display list of users with simple pagination
+    // display list of users paginated
     @GetMapping("/users/{pageId}")
     public String listOfUsers(@PathVariable int pageId, Model model) {
         // @PathVariable indicates that pageId should be bound to a URI template {pageId} variable
-        int totalIllustratedResults = 8; // custom max displayed results
-        if (pageId == 1) {
-            pageId = 0;
-        } else {
-            pageId = (pageId - 1) * totalIllustratedResults; // calculating first result at next pages (8,16...)
-        }
-        List<UserAccount> userAccountList
-                = userAccountService.userAccountList(pageId, totalIllustratedResults);
+        Long totalUsers = userAccountService.getTotalCountOfUsers();
+        List<Page> pageRepository = createPageRepository(totalPages(totalUsers));
+        model.addAttribute("pageRepository", pageRepository);
+        List<UserAccount> userAccountList = userAccountService.userAccountList(firstDisplayedResult(pageId), MAXIMUM_USERS_ON_PAGE);
         model.addAttribute("listOfUsers", userAccountList); // named attribute - this "name" (used in View) mapped with List<UserAccount>
         return "list-of-users";
     }
@@ -107,5 +107,36 @@ public class UMSController {
         accountTransferClass.setStatus(userAccount.getStatus());
         accountTransferClass.setCreatedAt(userAccount.getCreatedAt());
         return accountTransferClass;
+    }
+
+    // method counts total number of Pages depend on total count of users that retrieve from DB
+    private long totalPages(long totalUsers) {
+        long fullPages = totalUsers / MAXIMUM_USERS_ON_PAGE;
+        if (totalUsers % MAXIMUM_USERS_ON_PAGE == 0) {
+            return fullPages;
+        } else {
+            return fullPages + 1;
+        }
+    }
+
+    // method returns List of Pages filled by appropriate data
+    private List<Page> createPageRepository(long totalPages) {
+        List<Page> pageList = new ArrayList<>();
+        for (int i = 1; i < totalPages + 1; i++) {
+            Page singlePage = new Page(i);
+            pageList.add(singlePage);
+        }
+        return pageList;
+    }
+
+    // calculating first result at next pages (8,16...)
+    private int firstDisplayedResult(int currentPage) {
+        int firstResult;
+        if (currentPage == 1) {
+            firstResult = 0;
+        } else {
+            firstResult = (currentPage - 1) * MAXIMUM_USERS_ON_PAGE;
+        }
+        return firstResult;
     }
 }

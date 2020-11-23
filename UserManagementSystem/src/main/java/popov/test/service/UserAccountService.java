@@ -16,4 +16,6 @@ public interface UserAccountService {
     UserAccount getUserAccountByUserName(String userName);
 
     void deleteUserAccount(Integer id);
+
+    Long getTotalCountOfUsers();
 }
